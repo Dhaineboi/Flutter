@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import './widgets/chart.dart';
 
 import './widgets/new_transactions.dart';
@@ -6,7 +8,13 @@ import './widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
 import './models/transaction.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  SystemChrome.setPreferredOrientations(
+    [DeviceOrientation.portraitUp,
+     DeviceOrientation.portraitDown
+     ] );
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -14,8 +22,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Personal Expenses',
       theme: ThemeData(
-          primarySwatch: Colors.teal,
-          accentColor: Colors.amberAccent,
+          primarySwatch: Colors.lightBlue,
+          accentColor: Colors.redAccent,
           fontFamily: "Quicksand",
           textTheme: ThemeData.light().textTheme.copyWith(
                 title: TextStyle(
@@ -120,11 +128,12 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SingleChildScrollView(
         child: Column(
           //mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Container(
               height: (MediaQuery.of(context).size.height -
                       appbar.preferredSize.height) *
-                  0.4,
+                  0.2,
               child: Chart(_recentTransactions),
             ),
             Container(
