@@ -10,7 +10,9 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return transactions.isEmpty
-        ? Column(
+        ? LayoutBuilder(builder: (ctx,constrants){
+          return
+          Column(
             children: <Widget>[
               Text(
                 "No Transactions Added Yet!",
@@ -20,14 +22,15 @@ class TransactionList extends StatelessWidget {
                 height: 10,
               ),
               Container(
-                  height: 300,
+                  height: constrants.maxHeight * 0.6,
                   child: Image.asset(
                     "assets/images/waiting.png",
                     fit: BoxFit.cover,
                   )),
             ],
-          )
-        : ListView.builder(
+          );
+        })
+            : ListView.builder(
             itemBuilder: (ctx, index) {
               // return Card(
               //   child: Row(
@@ -91,7 +94,12 @@ class TransactionList extends StatelessWidget {
                   subtitle: Text(
                     DateFormat.yMMMd().format(transactions[index].date),
                   ),
-                  trailing: IconButton(
+                  trailing: MediaQuery.of(context).size.width > 360 ? FlatButton.icon(
+                    icon: Icon(Icons.delete),
+                    label: Text("Remove"),
+                    textColor: Theme.of(context).errorColor,
+                     onPressed: () => deleteTx(transactions[index].id),
+                  ) : IconButton(
                     icon: Icon(Icons.delete),
                     color: Theme.of(context).errorColor,
                     onPressed: () => deleteTx(transactions[index].id),
